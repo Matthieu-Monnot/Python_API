@@ -1,8 +1,6 @@
-Matthieu MONNOT
-
 TP 1 Python API
 
-Les fichiers contienent :
+Les fichiers contiennent :
 - main : le code d'essai de l'API commenté et la réponse à la question 1
 - top_10 : la réponse à la question 2
 - top_3 : la réponse à la question 3

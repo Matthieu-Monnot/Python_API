@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package taskmanager;
+
+service TaskService {
+    rpc MoneyFlowClassique(MoneyFlowClassiqueRequest) returns (MoneyFlowClassiqueResponse);
+    rpc MoneyFlowTempore(MoneyFlowTemporeRequest) returns (MoneyFlowTemporeResponse);
+    rpc Rendement(RendementRequest) returns (RendementResponse);
+    rpc Vwap(VwapRequest) returns (VwapResponse);
+    rpc Twap(TwapRequest) returns (TwapResponse);
+}
+
+message MoneyFlowClassiqueRequest {
+}
+
+message MoneyFlowClassiqueResponse {
+    float value = 1;
+}
+
+message MoneyFlowTemporeRequest {
+}
+
+message MoneyFlowTemporeResponse {
+    float value = 1;
+}
+
+message RendementRequest {
+}
+
+message RendementResponse {
+    float value = 1;
+}
+
+message VwapRequest {
+}
+
+message VwapResponse {
+    float value = 1;
+}
+
+message TwapRequest {
+}
+
+message TwapResponse {
+    float value = 1;
+}

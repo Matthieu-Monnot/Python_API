@@ -5,7 +5,7 @@ Matthieu Monnot & Guillaume Sima
 ## Prérequis
 pip install grpcio grpcio-tools requests
 
-## Fonction 
+## Fonctions 
 - L'API Binance est utilisée pour récupérer les données de transactions et de chandeliers pour Bitcoin (BTC) par rapport à l'USDT (Tether).
 - Le cache est mis à jour automatiquement toutes les minutes pour garantir que les données les plus récentes sont disponibles pour les calculs.
 - Le serveur s'exécute indéfiniment, en attente des demandes du client.

@@ -14,64 +14,114 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0btaskmanager\x12\x0btaskmanager\"%\n\x0e\x41\x64\x64TaskRequest\x12\x13\n\x0b\x64\x65scription\x18\x01 \x01(\t\".\n\x0f\x41\x64\x64TaskResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\n\n\x02id\x18\x02 \x01(\t\"\x12\n\x10ListTasksRequest\"5\n\x11ListTasksResponse\x12 \n\x05tasks\x18\x01 \x03(\x0b\x32\x11.taskmanager.Task\":\n\x04Task\x12\n\n\x02id\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x11\n\tcompleted\x18\x03 \x01(\x08\x32\x9f\x01\n\x0bTaskService\x12\x44\n\x07\x41\x64\x64Task\x12\x1b.taskmanager.AddTaskRequest\x1a\x1c.taskmanager.AddTaskResponse\x12J\n\tListTasks\x12\x1d.taskmanager.ListTasksRequest\x1a\x1e.taskmanager.ListTasksResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0btaskmanager\x12\x0btaskmanager\"\x1b\n\x19MoneyFlowClassiqueRequest\"+\n\x1aMoneyFlowClassiqueResponse\x12\r\n\x05value\x18\x01 \x01(\x02\"\x19\n\x17MoneyFlowTemporeRequest\")\n\x18MoneyFlowTemporeResponse\x12\r\n\x05value\x18\x01 \x01(\x02\"\x12\n\x10RendementRequest\"\"\n\x11RendementResponse\x12\r\n\x05value\x18\x01 \x01(\x02\"\r\n\x0bVwapRequest\"\x1d\n\x0cVwapResponse\x12\r\n\x05value\x18\x01 \x01(\x02\"\r\n\x0bTwapRequest\"\x1d\n\x0cTwapResponse\x12\r\n\x05value\x18\x01 \x01(\x02\x32\x9b\x03\n\x0bTaskService\x12\x65\n\x12MoneyFlowClassique\x12&.taskmanager.MoneyFlowClassiqueRequest\x1a\'.taskmanager.MoneyFlowClassiqueResponse\x12_\n\x10MoneyFlowTempore\x12$.taskmanager.MoneyFlowTemporeRequest\x1a%.taskmanager.MoneyFlowTemporeResponse\x12J\n\tRendement\x12\x1d.taskmanager.RendementRequest\x1a\x1e.taskmanager.RendementResponse\x12;\n\x04Vwap\x12\x18.taskmanager.VwapRequest\x1a\x19.taskmanager.VwapResponse\x12;\n\x04Twap\x12\x18.taskmanager.TwapRequest\x1a\x19.taskmanager.TwapResponseb\x06proto3')
 
 
 
-_ADDTASKREQUEST = DESCRIPTOR.message_types_by_name['AddTaskRequest']
-_ADDTASKRESPONSE = DESCRIPTOR.message_types_by_name['AddTaskResponse']
-_LISTTASKSREQUEST = DESCRIPTOR.message_types_by_name['ListTasksRequest']
-_LISTTASKSRESPONSE = DESCRIPTOR.message_types_by_name['ListTasksResponse']
-_TASK = DESCRIPTOR.message_types_by_name['Task']
-AddTaskRequest = _reflection.GeneratedProtocolMessageType('AddTaskRequest', (_message.Message,), {
-  'DESCRIPTOR' : _ADDTASKREQUEST,
+_MONEYFLOWCLASSIQUEREQUEST = DESCRIPTOR.message_types_by_name['MoneyFlowClassiqueRequest']
+_MONEYFLOWCLASSIQUERESPONSE = DESCRIPTOR.message_types_by_name['MoneyFlowClassiqueResponse']
+_MONEYFLOWTEMPOREREQUEST = DESCRIPTOR.message_types_by_name['MoneyFlowTemporeRequest']
+_MONEYFLOWTEMPORERESPONSE = DESCRIPTOR.message_types_by_name['MoneyFlowTemporeResponse']
+_RENDEMENTREQUEST = DESCRIPTOR.message_types_by_name['RendementRequest']
+_RENDEMENTRESPONSE = DESCRIPTOR.message_types_by_name['RendementResponse']
+_VWAPREQUEST = DESCRIPTOR.message_types_by_name['VwapRequest']
+_VWAPRESPONSE = DESCRIPTOR.message_types_by_name['VwapResponse']
+_TWAPREQUEST = DESCRIPTOR.message_types_by_name['TwapRequest']
+_TWAPRESPONSE = DESCRIPTOR.message_types_by_name['TwapResponse']
+MoneyFlowClassiqueRequest = _reflection.GeneratedProtocolMessageType('MoneyFlowClassiqueRequest', (_message.Message,), {
+  'DESCRIPTOR' : _MONEYFLOWCLASSIQUEREQUEST,
   '__module__' : 'taskmanager_pb2'
-  # @@protoc_insertion_point(class_scope:taskmanager.AddTaskRequest)
+  # @@protoc_insertion_point(class_scope:taskmanager.MoneyFlowClassiqueRequest)
   })
-_sym_db.RegisterMessage(AddTaskRequest)
+_sym_db.RegisterMessage(MoneyFlowClassiqueRequest)
 
-AddTaskResponse = _reflection.GeneratedProtocolMessageType('AddTaskResponse', (_message.Message,), {
-  'DESCRIPTOR' : _ADDTASKRESPONSE,
+MoneyFlowClassiqueResponse = _reflection.GeneratedProtocolMessageType('MoneyFlowClassiqueResponse', (_message.Message,), {
+  'DESCRIPTOR' : _MONEYFLOWCLASSIQUERESPONSE,
   '__module__' : 'taskmanager_pb2'
-  # @@protoc_insertion_point(class_scope:taskmanager.AddTaskResponse)
+  # @@protoc_insertion_point(class_scope:taskmanager.MoneyFlowClassiqueResponse)
   })
-_sym_db.RegisterMessage(AddTaskResponse)
+_sym_db.RegisterMessage(MoneyFlowClassiqueResponse)
 
-ListTasksRequest = _reflection.GeneratedProtocolMessageType('ListTasksRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LISTTASKSREQUEST,
+MoneyFlowTemporeRequest = _reflection.GeneratedProtocolMessageType('MoneyFlowTemporeRequest', (_message.Message,), {
+  'DESCRIPTOR' : _MONEYFLOWTEMPOREREQUEST,
   '__module__' : 'taskmanager_pb2'
-  # @@protoc_insertion_point(class_scope:taskmanager.ListTasksRequest)
+  # @@protoc_insertion_point(class_scope:taskmanager.MoneyFlowTemporeRequest)
   })
-_sym_db.RegisterMessage(ListTasksRequest)
+_sym_db.RegisterMessage(MoneyFlowTemporeRequest)
 
-ListTasksResponse = _reflection.GeneratedProtocolMessageType('ListTasksResponse', (_message.Message,), {
-  'DESCRIPTOR' : _LISTTASKSRESPONSE,
+MoneyFlowTemporeResponse = _reflection.GeneratedProtocolMessageType('MoneyFlowTemporeResponse', (_message.Message,), {
+  'DESCRIPTOR' : _MONEYFLOWTEMPORERESPONSE,
   '__module__' : 'taskmanager_pb2'
-  # @@protoc_insertion_point(class_scope:taskmanager.ListTasksResponse)
+  # @@protoc_insertion_point(class_scope:taskmanager.MoneyFlowTemporeResponse)
   })
-_sym_db.RegisterMessage(ListTasksResponse)
+_sym_db.RegisterMessage(MoneyFlowTemporeResponse)
 
-Task = _reflection.GeneratedProtocolMessageType('Task', (_message.Message,), {
-  'DESCRIPTOR' : _TASK,
+RendementRequest = _reflection.GeneratedProtocolMessageType('RendementRequest', (_message.Message,), {
+  'DESCRIPTOR' : _RENDEMENTREQUEST,
   '__module__' : 'taskmanager_pb2'
-  # @@protoc_insertion_point(class_scope:taskmanager.Task)
+  # @@protoc_insertion_point(class_scope:taskmanager.RendementRequest)
   })
-_sym_db.RegisterMessage(Task)
+_sym_db.RegisterMessage(RendementRequest)
+
+RendementResponse = _reflection.GeneratedProtocolMessageType('RendementResponse', (_message.Message,), {
+  'DESCRIPTOR' : _RENDEMENTRESPONSE,
+  '__module__' : 'taskmanager_pb2'
+  # @@protoc_insertion_point(class_scope:taskmanager.RendementResponse)
+  })
+_sym_db.RegisterMessage(RendementResponse)
+
+VwapRequest = _reflection.GeneratedProtocolMessageType('VwapRequest', (_message.Message,), {
+  'DESCRIPTOR' : _VWAPREQUEST,
+  '__module__' : 'taskmanager_pb2'
+  # @@protoc_insertion_point(class_scope:taskmanager.VwapRequest)
+  })
+_sym_db.RegisterMessage(VwapRequest)
+
+VwapResponse = _reflection.GeneratedProtocolMessageType('VwapResponse', (_message.Message,), {
+  'DESCRIPTOR' : _VWAPRESPONSE,
+  '__module__' : 'taskmanager_pb2'
+  # @@protoc_insertion_point(class_scope:taskmanager.VwapResponse)
+  })
+_sym_db.RegisterMessage(VwapResponse)
+
+TwapRequest = _reflection.GeneratedProtocolMessageType('TwapRequest', (_message.Message,), {
+  'DESCRIPTOR' : _TWAPREQUEST,
+  '__module__' : 'taskmanager_pb2'
+  # @@protoc_insertion_point(class_scope:taskmanager.TwapRequest)
+  })
+_sym_db.RegisterMessage(TwapRequest)
+
+TwapResponse = _reflection.GeneratedProtocolMessageType('TwapResponse', (_message.Message,), {
+  'DESCRIPTOR' : _TWAPRESPONSE,
+  '__module__' : 'taskmanager_pb2'
+  # @@protoc_insertion_point(class_scope:taskmanager.TwapResponse)
+  })
+_sym_db.RegisterMessage(TwapResponse)
 
 _TASKSERVICE = DESCRIPTOR.services_by_name['TaskService']
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _ADDTASKREQUEST._serialized_start=28
-  _ADDTASKREQUEST._serialized_end=65
-  _ADDTASKRESPONSE._serialized_start=67
-  _ADDTASKRESPONSE._serialized_end=113
-  _LISTTASKSREQUEST._serialized_start=115
-  _LISTTASKSREQUEST._serialized_end=133
-  _LISTTASKSRESPONSE._serialized_start=135
-  _LISTTASKSRESPONSE._serialized_end=188
-  _TASK._serialized_start=190
-  _TASK._serialized_end=248
-  _TASKSERVICE._serialized_start=251
-  _TASKSERVICE._serialized_end=410
+  _MONEYFLOWCLASSIQUEREQUEST._serialized_start=28
+  _MONEYFLOWCLASSIQUEREQUEST._serialized_end=55
+  _MONEYFLOWCLASSIQUERESPONSE._serialized_start=57
+  _MONEYFLOWCLASSIQUERESPONSE._serialized_end=100
+  _MONEYFLOWTEMPOREREQUEST._serialized_start=102
+  _MONEYFLOWTEMPOREREQUEST._serialized_end=127
+  _MONEYFLOWTEMPORERESPONSE._serialized_start=129
+  _MONEYFLOWTEMPORERESPONSE._serialized_end=170
+  _RENDEMENTREQUEST._serialized_start=172
+  _RENDEMENTREQUEST._serialized_end=190
+  _RENDEMENTRESPONSE._serialized_start=192
+  _RENDEMENTRESPONSE._serialized_end=226
+  _VWAPREQUEST._serialized_start=228
+  _VWAPREQUEST._serialized_end=241
+  _VWAPRESPONSE._serialized_start=243
+  _VWAPRESPONSE._serialized_end=272
+  _TWAPREQUEST._serialized_start=274
+  _TWAPREQUEST._serialized_end=287
+  _TWAPRESPONSE._serialized_start=289
+  _TWAPRESPONSE._serialized_end=318
+  _TASKSERVICE._serialized_start=321
+  _TASKSERVICE._serialized_end=732
 # @@protoc_insertion_point(module_scope)

@@ -1,18 +1,16 @@
-TP 3 Python API
+# TP 3 Python API
 Matthieu Monnot & Guillaume Sima
 
 
-Prérequis
+## Prérequis
 pip install grpcio grpcio-tools requests
 
-Fonction 
+## Fonction 
 - L'API Binance est utilisée pour récupérer les données de transactions et de chandeliers pour Bitcoin (BTC) par rapport à l'USDT (Tether).
 - Le cache est mis à jour automatiquement toutes les minutes pour garantir que les données les plus récentes sont disponibles pour les calculs.
 - Le serveur s'exécute indéfiniment, en attente des demandes du client.
 
-
-Indicateurs financiers
-
+## Indicateurs financiers
 Les indicateurs financiers implémentés et leurs méthodes gRPC associées sont les suivants :
 - Money Flow Classique 
 - Money Flow Temporel
@@ -22,8 +20,7 @@ Les indicateurs financiers implémentés et leurs méthodes gRPC associées sont
 
 Les indicateurs sont calculés à l'aide des données de l'API Binance et sont mises en cache pour améliorer les performances. La mise à jour du cache est automatique toutes les minutes.
 
-
-Structure du dossier
+## Structure du dossier
 
 - client.py : contient une méthode run qui correspond aux requêtes du client. Il appelle les fonctions "Request" afin de récupérer les résultats des calculs des 5 indicateurs et les print dans la console.
 - server.py : contient des fonctions d'appels à l'API de binance et une class Task qui possède des méthodes pour calculer à partir des données de l'API binance les indicateurs présentés. Ces méthodes encapsulent ensuite les résultats dans le taskmanager du server pour qu'ils soient requêtables par le client.

@@ -6,8 +6,7 @@ import taskmanager_pb2 as taskmanager__pb2
 
 
 class TaskServiceStub(object):
-    """Le service de gestion de tâches
-    """
+    """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
         """Constructor.
@@ -15,32 +14,62 @@ class TaskServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.AddTask = channel.unary_unary(
-                '/taskmanager.TaskService/AddTask',
-                request_serializer=taskmanager__pb2.AddTaskRequest.SerializeToString,
-                response_deserializer=taskmanager__pb2.AddTaskResponse.FromString,
+        self.MoneyFlowClassique = channel.unary_unary(
+                '/taskmanager.TaskService/MoneyFlowClassique',
+                request_serializer=taskmanager__pb2.MoneyFlowClassiqueRequest.SerializeToString,
+                response_deserializer=taskmanager__pb2.MoneyFlowClassiqueResponse.FromString,
                 )
-        self.ListTasks = channel.unary_unary(
-                '/taskmanager.TaskService/ListTasks',
-                request_serializer=taskmanager__pb2.ListTasksRequest.SerializeToString,
-                response_deserializer=taskmanager__pb2.ListTasksResponse.FromString,
+        self.MoneyFlowTempore = channel.unary_unary(
+                '/taskmanager.TaskService/MoneyFlowTempore',
+                request_serializer=taskmanager__pb2.MoneyFlowTemporeRequest.SerializeToString,
+                response_deserializer=taskmanager__pb2.MoneyFlowTemporeResponse.FromString,
+                )
+        self.Rendement = channel.unary_unary(
+                '/taskmanager.TaskService/Rendement',
+                request_serializer=taskmanager__pb2.RendementRequest.SerializeToString,
+                response_deserializer=taskmanager__pb2.RendementResponse.FromString,
+                )
+        self.Vwap = channel.unary_unary(
+                '/taskmanager.TaskService/Vwap',
+                request_serializer=taskmanager__pb2.VwapRequest.SerializeToString,
+                response_deserializer=taskmanager__pb2.VwapResponse.FromString,
+                )
+        self.Twap = channel.unary_unary(
+                '/taskmanager.TaskService/Twap',
+                request_serializer=taskmanager__pb2.TwapRequest.SerializeToString,
+                response_deserializer=taskmanager__pb2.TwapResponse.FromString,
                 )
 
 
 class TaskServiceServicer(object):
-    """Le service de gestion de tâches
-    """
+    """Missing associated documentation comment in .proto file."""
 
-    def AddTask(self, request, context):
-        """Ajoute une nouvelle tâche
-        """
+    def MoneyFlowClassique(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def ListTasks(self, request, context):
-        """Liste toutes les tâches
-        """
+    def MoneyFlowTempore(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Rendement(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Vwap(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Twap(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -48,15 +77,30 @@ class TaskServiceServicer(object):
 
 def add_TaskServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'AddTask': grpc.unary_unary_rpc_method_handler(
-                    servicer.AddTask,
-                    request_deserializer=taskmanager__pb2.AddTaskRequest.FromString,
-                    response_serializer=taskmanager__pb2.AddTaskResponse.SerializeToString,
+            'MoneyFlowClassique': grpc.unary_unary_rpc_method_handler(
+                    servicer.MoneyFlowClassique,
+                    request_deserializer=taskmanager__pb2.MoneyFlowClassiqueRequest.FromString,
+                    response_serializer=taskmanager__pb2.MoneyFlowClassiqueResponse.SerializeToString,
             ),
-            'ListTasks': grpc.unary_unary_rpc_method_handler(
-                    servicer.ListTasks,
-                    request_deserializer=taskmanager__pb2.ListTasksRequest.FromString,
-                    response_serializer=taskmanager__pb2.ListTasksResponse.SerializeToString,
+            'MoneyFlowTempore': grpc.unary_unary_rpc_method_handler(
+                    servicer.MoneyFlowTempore,
+                    request_deserializer=taskmanager__pb2.MoneyFlowTemporeRequest.FromString,
+                    response_serializer=taskmanager__pb2.MoneyFlowTemporeResponse.SerializeToString,
+            ),
+            'Rendement': grpc.unary_unary_rpc_method_handler(
+                    servicer.Rendement,
+                    request_deserializer=taskmanager__pb2.RendementRequest.FromString,
+                    response_serializer=taskmanager__pb2.RendementResponse.SerializeToString,
+            ),
+            'Vwap': grpc.unary_unary_rpc_method_handler(
+                    servicer.Vwap,
+                    request_deserializer=taskmanager__pb2.VwapRequest.FromString,
+                    response_serializer=taskmanager__pb2.VwapResponse.SerializeToString,
+            ),
+            'Twap': grpc.unary_unary_rpc_method_handler(
+                    servicer.Twap,
+                    request_deserializer=taskmanager__pb2.TwapRequest.FromString,
+                    response_serializer=taskmanager__pb2.TwapResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -66,11 +110,10 @@ def add_TaskServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class TaskService(object):
-    """Le service de gestion de tâches
-    """
+    """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def AddTask(request,
+    def MoneyFlowClassique(request,
             target,
             options=(),
             channel_credentials=None,
@@ -80,14 +123,14 @@ class TaskService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/taskmanager.TaskService/AddTask',
-            taskmanager__pb2.AddTaskRequest.SerializeToString,
-            taskmanager__pb2.AddTaskResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/taskmanager.TaskService/MoneyFlowClassique',
+            taskmanager__pb2.MoneyFlowClassiqueRequest.SerializeToString,
+            taskmanager__pb2.MoneyFlowClassiqueResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def ListTasks(request,
+    def MoneyFlowTempore(request,
             target,
             options=(),
             channel_credentials=None,
@@ -97,8 +140,59 @@ class TaskService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/taskmanager.TaskService/ListTasks',
-            taskmanager__pb2.ListTasksRequest.SerializeToString,
-            taskmanager__pb2.ListTasksResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/taskmanager.TaskService/MoneyFlowTempore',
+            taskmanager__pb2.MoneyFlowTemporeRequest.SerializeToString,
+            taskmanager__pb2.MoneyFlowTemporeResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Rendement(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/taskmanager.TaskService/Rendement',
+            taskmanager__pb2.RendementRequest.SerializeToString,
+            taskmanager__pb2.RendementResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Vwap(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/taskmanager.TaskService/Vwap',
+            taskmanager__pb2.VwapRequest.SerializeToString,
+            taskmanager__pb2.VwapResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Twap(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/taskmanager.TaskService/Twap',
+            taskmanager__pb2.TwapRequest.SerializeToString,
+            taskmanager__pb2.TwapResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -2,35 +2,25 @@ from __future__ import annotations
 from typing import Annotated
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+import json
 
-# Users database with 2 regular users and 1 administrator
-fake_users_db = {
-    "admin": {
-        "username": "admin",
-        "full_name": "admin",
-        "email": "admin@fastApi.com",
-        "hashed_password": "fakehashedsecret",
-        "disabled": False,
-        "admin": True,
-    },
-    "alice": {
-        "username": "alice",
-        "full_name": "Alice Wonderson",
-        "email": "alice@example.com",
-        "hashed_password": "fakehashedsecret2",
-        "disabled": True,
-        "admin": False,
-    },
-    "bod": {
-        "username": "bod",
-        "full_name": "bod Wonderson",
-        "email": "bod@example.com",
-        "hashed_password": "fakehashedsecret1",
-        "disabled": False,
-        "admin": False,
-    },
-}
+available_subscriptions = ["free", "premium", "company"]
+
+def load_users_from_json(file_path):
+    with open(file_path, 'r') as f:
+        return json.load(f)
+
+def save_users_to_json(users, file_path):
+    with open(file_path, 'w') as f:
+        json.dump(users, f, indent=2)
+
+
+file_path = "db_users.json"
+fake_users_db = load_users_from_json(file_path)
+
+
 
 
 def fake_hash_password(password: str):
@@ -49,8 +39,7 @@ class User(BaseModel):
     username: str
     email: str  = None
     full_name: str = None
-    disabled: bool = None
-    admin: bool = None
+    abonement: str = None
 
 
 class UserInDB(User):
@@ -95,23 +84,64 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     return user
 
 
-async def get_current_active_user(current_user: Annotated[User, Depends(get_current_user)]):
-    """
-    Get the current active user based on the current user.
-    :param current_user: The current user.
-    :return: The current user if active, otherwise raise HTTPException.
-    """
-    if current_user.disabled:
-        raise HTTPException(status_code=400, detail="Function not available because you are an Inactive user")
+async def get_access_moneyflowclassique(current_user: Annotated[User, Depends(get_current_user)]):
+    if current_user.abonement != "free":
+        raise HTTPException(status_code=400, detail="Function available only for free subscription")
     return current_user
 
 
-async def get_current_admin_user(current_user: Annotated[User, Depends(get_current_user)]):
-    """
-    Get the current admin user based on the current user.
-    :param current_user: The current user.
-    :return:The current user if an admin, otherwise raise HTTPException.
-    """
-    if not current_user.admin:
-        raise HTTPException(status_code=400, detail="Function not available because you are not an Administrator user")
+async def get_access_rsi(current_user: Annotated[User, Depends(get_current_user)]):
+    if current_user.abonement != "premium":
+        raise HTTPException(status_code=400, detail="Function available only for premium subscription")
     return current_user
+
+async def get_access_macd(current_user: Annotated[User, Depends(get_current_user)]):
+    if current_user.abonement != "company":
+        raise HTTPException(status_code=400, detail="Function available only for company subscription")
+    return current_user
+
+async def get_access_sma(current_user: Annotated[User, Depends(get_current_user)]):
+    if current_user.abonement != "company" and current_user.abonement != "premium":
+        raise HTTPException(status_code=400, detail="Function available only for company subscription and premium subscription")
+    return current_user
+
+def update_user_subscription(current_user, new_subscription):
+    if new_subscription not in available_subscriptions:
+        raise HTTPException(status_code=400, detail="Invalide parameters, please enter 'free' or 'premium' or 'company'")
+
+    if current_user.username in fake_users_db:
+        fake_users_db[current_user.username]["abonement"] = new_subscription
+        save_users_to_json(fake_users_db, file_path)
+        current_user.abonement = new_subscription
+        return current_user
+    return None
+
+
+def save_new_user(username, password, full_name, email, abonement):
+    if username in fake_users_db:
+        raise HTTPException(status_code=400, detail="Username is already taken")
+
+    hashed_password = fake_hash_password(password)
+    new_user = {
+        "username": username,
+        "full_name": full_name,
+        "email": email,
+        "hashed_password": hashed_password,
+        "abonement":abonement,
+    }
+
+    fake_users_db[username] = new_user
+    save_users_to_json(fake_users_db, file_path)
+    return {"message": "User successfully registered"}
+
+
+def delete_user(username, current_user):
+    if username not in fake_users_db:
+        raise HTTPException(status_code=400, detail="User not found")
+
+    if username != current_user.username:
+        raise HTTPException(status_code=400, detail="You cannot delete an other account")
+
+    del fake_users_db[username]
+    save_users_to_json(fake_users_db, file_path)
+    return {"message": "User successfully deleted"}

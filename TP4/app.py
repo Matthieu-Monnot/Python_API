@@ -1,7 +1,15 @@
-from fastapi import FastAPI
+from typing import Annotated
+
+from fastapi import FastAPI, Depends, HTTPException, Form
 from collections import Counter
 import requests
+from fastapi.security import OAuth2PasswordRequestForm
+from pydantic import BaseModel
+from starlette.responses import HTMLResponse
 
+from Authentification import User, fake_users_db, fake_hash_password, \
+    UserInDB, get_current_user, update_user_subscription, save_new_user, delete_user, get_access_moneyflowclassique, \
+    get_access_rsi, get_access_macd, get_access_sma
 
 app = FastAPI()
 rate_limiting = Counter()
@@ -66,7 +74,7 @@ def get_rendement(symbol):
 
 
 @app.get("/moneyflowclassique")
-def get_moneyflowclassique(symbol):
+def get_moneyflowclassique(symbol, current_user: User = Depends(get_access_moneyflowclassique)):
     trades = get_binance_trade_volume(symbol=symbol)
     volume_taker_buyer = 0
     volume_taker_seller = 0
@@ -84,7 +92,7 @@ def get_moneyflowclassique(symbol):
 
 
 @app.get("/rsi")
-def get_rsi(symbol):
+def get_rsi(symbol, current_user: User = Depends(get_access_rsi)):
     trades = get_binance_trade_volume(symbol=symbol)
     if trades is None or len(trades) < 15:
         return None
@@ -93,12 +101,62 @@ def get_rsi(symbol):
 
 
 @app.get("/macd")
-def get_macd(symbol):
+def get_macd(symbol, current_user: User = Depends(get_access_macd)):
     trades = get_binance_trade_volume(symbol=symbol)
     if trades is None or len(trades) < 26:
         return None
     macd_value, signal_value = calculate_macd(trades)
     return macd_value, signal_value
+@app.get("/sma")
+def SMA(symbol, current_user: User = Depends(get_access_sma)):
+    trades = get_binance_candlestick_data(symbol=symbol)
+    if trades is None:
+        return None
+
+    close_prices = [float(kline[4]) for kline in trades]
+
+    if len(close_prices) < 10:
+        return None
+    sma = sum(close_prices[-10:]) / 10
+
+    return sma
+
+@app.post("/token")
+async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+    user_dict = fake_users_db.get(form_data.username)
+    if not user_dict:
+        raise HTTPException(status_code=400, detail="Incorrect username or password")
+    user = UserInDB(**user_dict)
+    hashed_password = fake_hash_password(form_data.password)
+    if not hashed_password == user.hashed_password:
+        raise HTTPException(status_code=400, detail="Incorrect username or password")
+    return {"access_token": user.username, "token_type": "bearer"}
+
+@app.get("/profil")
+def users_profil(current_user: User = Depends(get_current_user)):
+    return current_user
+
+
+@app.put("/updateSubscription")
+def update_subscription(SubscriptionUpdate, current_user: User = Depends(get_current_user)):
+    return update_user_subscription(current_user, SubscriptionUpdate)
+
+
+@app.post("/register")
+def register(
+    username: str = Form(...),
+    password: str = Form(...),
+    full_name: str = Form(...),
+    email: str = Form(...),
+    abonement: str = Form(...),
+):
+    return save_new_user(username, password, full_name, email, abonement)
+
+@app.delete("/delete_user")
+def delete_my_account(username: str = Form(...), current_user: User = Depends(get_current_user)):
+    return delete_user(username, current_user)
+
+
 
 
 """

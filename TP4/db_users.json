@@ -1,0 +1,30 @@
+{
+  "free": {
+    "username": "free",
+    "full_name": "People Free",
+    "email": "free@fastApi.com",
+    "hashed_password": "fakehashedf",
+    "abonement": "free"
+  },
+  "premium": {
+    "username": "premium",
+    "full_name": "People Premium",
+    "email": "premium@example.com",
+    "hashed_password": "fakehashedp",
+    "abonement": "premium"
+  },
+  "company": {
+    "username": "company",
+    "full_name": "People company",
+    "email": "company@example.com",
+    "hashed_password": "fakehashedc",
+    "abonement": "company"
+  },
+  "a": {
+    "username": "a",
+    "full_name": "a",
+    "email": "a",
+    "hashed_password": "fakehasheda",
+    "abonement": "a"
+  }
+}

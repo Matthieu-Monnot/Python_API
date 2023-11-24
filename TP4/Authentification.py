@@ -8,9 +8,11 @@ import json
 
 available_subscriptions = ["free", "premium", "company"]
 
+
 def load_users_from_json(file_path):
     with open(file_path, 'r') as f:
         return json.load(f)
+
 
 def save_users_to_json(users, file_path):
     with open(file_path, 'w') as f:
@@ -21,8 +23,6 @@ file_path = "db_users.json"
 fake_users_db = load_users_from_json(file_path)
 
 
-
-
 def fake_hash_password(password: str):
     """
     Password hashing function.
@@ -31,8 +31,10 @@ def fake_hash_password(password: str):
     """
     return "fakehashed" + password
 
+
 # OAuth2 password bearer scheme
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 
 # Pydantic class to represent the structure of a user
 class User(BaseModel):
@@ -95,15 +97,18 @@ async def get_access_rsi(current_user: Annotated[User, Depends(get_current_user)
         raise HTTPException(status_code=400, detail="Function available only for premium subscription")
     return current_user
 
+
 async def get_access_macd(current_user: Annotated[User, Depends(get_current_user)]):
     if current_user.abonement != "company":
         raise HTTPException(status_code=400, detail="Function available only for company subscription")
     return current_user
 
+
 async def get_access_sma(current_user: Annotated[User, Depends(get_current_user)]):
     if current_user.abonement != "company" and current_user.abonement != "premium":
         raise HTTPException(status_code=400, detail="Function available only for company subscription and premium subscription")
     return current_user
+
 
 def update_user_subscription(current_user, new_subscription):
     if new_subscription not in available_subscriptions:

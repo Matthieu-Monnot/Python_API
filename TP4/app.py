@@ -1,9 +1,10 @@
 import os
 from typing import Annotated
 
-from fastapi import FastAPI, Depends, HTTPException, Form
+from fastapi import FastAPI, Depends, HTTPException, Form, Request
 from collections import Counter
 import requests
+from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordRequestForm
 import pickle
 from Authentification import User, fake_users_db, fake_hash_password, \
@@ -12,8 +13,9 @@ from Authentification import User, fake_users_db, fake_hash_password, \
 
 app = FastAPI()
 rate_limiting = Counter()
-route_last_access = {}
+route_last_access = dict()
 cache_dir = "cache_directory"
+
 
 def get_binance_candlestick_data(symbol, interval='1m', limit=60):
     url = f'https://api.binance.com/api/v3/klines'
@@ -62,7 +64,6 @@ def calculate_macd(data, short_window=12, long_window=26, signal_window=9):
     return macd_line, signal_line
 
 
-
 def load_from_cache(cache_key):
     cache_path = os.path.join(cache_dir, f"{cache_key}.pkl")
     try:
@@ -73,7 +74,6 @@ def load_from_cache(cache_key):
         return None
 
 
-
 def save_to_cache(cache_key, data):
     cache_path = os.path.join(cache_dir, f"{cache_key}.pkl")
     with open(cache_path, 'wb') as f:
@@ -81,7 +81,7 @@ def save_to_cache(cache_key, data):
 
 
 @app.get("/rendement")
-def get_rendement(symbol, loadcash:bool):
+def get_rendement(symbol, loadcash: bool):
     cache_key = f"rend_{symbol}"
     if loadcash:
         return load_from_cache(cache_key)
@@ -95,7 +95,7 @@ def get_rendement(symbol, loadcash:bool):
 
 
 @app.get("/moneyflowclassique")
-def get_moneyflowclassique(symbol, loadcash:bool, current_user: User = Depends(get_access_moneyflowclassique)):
+def get_moneyflowclassique(symbol, loadcash: bool, current_user: User = Depends(get_access_moneyflowclassique)):
     cache_key = f"moneyflowC_{symbol}"
     if loadcash:
         return load_from_cache(cache_key)
@@ -117,7 +117,7 @@ def get_moneyflowclassique(symbol, loadcash:bool, current_user: User = Depends(g
 
 
 @app.get("/rsi")
-def get_rsi(symbol,loadcash:bool, current_user: User = Depends(get_access_rsi)):
+def get_rsi(symbol, loadcash: bool, current_user: User = Depends(get_access_rsi)):
     cache_key = f"rsi_{symbol}"
     if loadcash:
         return load_from_cache(cache_key)
@@ -130,7 +130,7 @@ def get_rsi(symbol,loadcash:bool, current_user: User = Depends(get_access_rsi)):
 
 
 @app.get("/macd")
-def get_macd(symbol,loadcash:bool, current_user: User = Depends(get_access_macd)):
+def get_macd(symbol, loadcash: bool, current_user: User = Depends(get_access_macd)):
     cache_key = f"macd_{symbol}"
     if loadcash:
         return load_from_cache(cache_key)
@@ -140,8 +140,10 @@ def get_macd(symbol,loadcash:bool, current_user: User = Depends(get_access_macd)
     macd_value, signal_value = calculate_macd(trades)
     save_to_cache(cache_key, macd_value)
     return macd_value
+
+
 @app.get("/sma")
-def SMA(symbol,loadcash:bool, current_user: User = Depends(get_access_sma)):
+def SMA(symbol, loadcash: bool, current_user: User = Depends(get_access_sma)):
     cache_key = f"sma_{symbol}"
     if loadcash:
         return load_from_cache(cache_key)
@@ -157,6 +159,7 @@ def SMA(symbol,loadcash:bool, current_user: User = Depends(get_access_sma)):
     save_to_cache(cache_key, sma)
     return sma
 
+
 @app.post("/token")
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     user_dict = fake_users_db.get(form_data.username)
@@ -167,6 +170,7 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     if not hashed_password == user.hashed_password:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     return {"access_token": user.username, "token_type": "bearer"}
+
 
 @app.get("/profil")
 def users_profil(current_user: User = Depends(get_current_user)):
@@ -188,24 +192,21 @@ def register(
 ):
     return save_new_user(username, password, full_name, email, abonement)
 
+
 @app.delete("/delete_user")
 def delete_my_account(username: str = Form(...), current_user: User = Depends(get_current_user)):
     return delete_user(username, current_user)
 
 
-
-
-"""
 @app.middleware("http")
 async def rate_limit_middleware(request: Request, call_next):
     route = request.url.path
     if route not in route_last_access:
         route_last_access[route] = datetime.utcnow()
     time_difference = datetime.utcnow() - route_last_access[route]
-    if time_difference < timedelta(minutes=0.1):
-        if route_last_access[route] > datetime.utcnow() - timedelta(seconds=30) and route_last_access[route] != datetime.min:
+    if time_difference < timedelta(minutes=1):
+        if route_last_access[route] > datetime.utcnow() - timedelta(seconds=5) and route_last_access[route] != datetime.min:
             raise HTTPException(status_code=400, detail="Rate limit exceeded. Try again later.")
     route_last_access[route] = datetime.utcnow()
     response = await call_next(request)
     return response
-"""

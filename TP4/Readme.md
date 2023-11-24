@@ -1,7 +1,7 @@
 # TP 4 : API d'Indicateurs Financiers avec Gestion des Niveaux d'Accès
-Matthieu Monnot, Guillaume Sima & 
+Matthieu Monnot, Guillaume Sima & Cyprien Tardivel
 
-Cette application FastAPI permet de recupperer des données de marché Binance, pour le calcul du Rendement, du Money Flow Classique, du RSI, du MACD et du SMA, d'un symbol donné. 
+Cette application FastAPI permet de recupérer des données de marché Binance, pour le calcul du Rendement, du Money Flow Classique, du RSI, du MACD et du SMA, d'un symbol donné. 
 Les données sont extraites de l'API Binance, et les résultats sont mis en cache pour optimiser les performances.
 
 ## Prérequis
@@ -93,9 +93,13 @@ Les utilasteurs déjà enregistraient ne peuvent pas s'enregistrer de nouveau.
     - username (str) : Nom d'utilisateur de l'utilisateur à supprimer. 
 - Description : Supprime l'utilisateur connecté actuel avec le nom d'utilisateur spécifié.
 
+### Rate limiting
+Un système de rate limiting a été implémenté permettant de contrôler le nombre maximum de requête par route et par minute 
+La fonction rate_limit_middleware est un intermédiaire dans le protocol HTTP du server de l'API qui gère cette fonctionnalité.
+
 ## Structure du dossier
-- main.py : 
-- app.py : 
+- main.py : lance l'app grâce à l'import 
+- app.py : server et fonctions
 - Authentification.py : contient des fonctions qui gérent l'authentifications des utilisateurs, le chargement du fichier json, création et suppression d'utilisateurs 
 - db_users.json : contient les informations des utilisateurs sous forme de dictionnaire
 - cache_directory : répertoire pour stocker les fichiers de cache.
